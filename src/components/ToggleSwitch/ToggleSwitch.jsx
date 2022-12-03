@@ -21,7 +21,7 @@ const ToggleSwitch = () =>{
             <button className="text-white h-7 w-1/2 text-base font-normal rounded" 
                 value="Activate" style={{backgroundColor: active}} 
                 onClick={(e) => handleClick(e,"Activate")}>Activate</button>
-            <button className="text-white h-8 w-1/2 text-base font-normal rounded" 
+            <button className="text-white h-7 w-1/2 text-base font-normal rounded" 
                 value="Disbale" style={{backgroundColor: disable}} 
                 onClick={(e) => handleClick(e,"Disable")}>Disable</button>
         </div>
