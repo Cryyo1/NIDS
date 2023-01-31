@@ -1,3 +1,4 @@
+import asyncio
 from spade import agent, quit_spade
 from spade.behaviour import CyclicBehaviour
 from scapy.all import *
@@ -26,7 +27,7 @@ class AgentSniffer(agent.Agent):
             
 
         async def run(self):
-            sniff(filter=f"port {self.port}", prn=self.process_packet, iface=self.iface, store=False)
+            sniff(filter=f"port {self.port}", prn=self.process_packet, iface=self.iface, store=True)
     
         ### This function is executed whenever a packet is sniffed
         def process_packet(self,packet):

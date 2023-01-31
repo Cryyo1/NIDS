@@ -15,6 +15,7 @@ const ToggleSwitch = () => {
             setDisable("#6f48e2");
             setActive("#171719");
         }
+        console.log(toggle);
     }
     return (
         <div className="flex sm:flex-row h-10 w-1/5 bg-darkgrey rounded items-center p-5">

