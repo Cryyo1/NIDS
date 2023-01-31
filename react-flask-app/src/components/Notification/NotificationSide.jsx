@@ -1,25 +1,38 @@
-import {React,useEffect,useState} from "react";
+import { React, useContext, useEffect, useState } from "react";
 import NotificationCard from "../Notification/NotificationCard";
 import axios from "axios";
+import { LogContext } from "../context/context";
 
 const NotificationSide = () => {
 
-	var [logs,setLogs]=useState([]);
+	var [logs, setLogs] = useState([]);
+	const { currentLog, setcurrentLog } = useContext(LogContext);
+
+	const updateLogs = () => {
+		axios.get("/data")
+			.then((res) => {
+				setLogs([...res.data])
+					.catch((e) => console.error(e))
+			})
+	}
 
 	useEffect(() => {
-		axios.get("/data").then((res) => {
-			setLogs([...res.data])
-		});
+		updateLogs();
 	}, []);
+
+
+
 	const Logs = () => {
 		const listOfLogs = logs.map((log) => {
-			return <NotificationCard
-				crit={log.crit}
-				title={log.title}
-				subtitle={log.subtitle}
-				time={log.time}
-				description={log.description}
-			/>
+			return <div onClick={() => { setcurrentLog(log); console.log(currentLog) }}>
+				<NotificationCard
+					crit={log.crit}
+					title={log.title}
+					subtitle={log.subtitle}
+					time={log.time}
+					description={log.description}
+				/>
+			</div>
 		});
 		return [listOfLogs];
 	}
@@ -29,7 +42,7 @@ const NotificationSide = () => {
 		<div className=" rounded-md  overflow-y-scroll  h-full max-h-screen scrollbar  scrollbar-track-gray-100 ...">
 			<Logs />
 		</div>
-		
+
 	);
 }
 
