@@ -53,7 +53,7 @@
     "6": {
         "crit": 75,
         "data": "",
-        "description": "une tentative de brute force a \u00e9t\u00e9 d\u00e9tect\u00e9etestphp.vulnweb.com/login.php",
+        "description": "une tentative de brute force a \u00e9t\u00e9 d\u00e9tect\u00e9e sur testphp.vulnweb.com/login.php",
         "id": "6",
         "ip_dest": "44.228.249.3",
         "ip_source": "192.168.100.6",

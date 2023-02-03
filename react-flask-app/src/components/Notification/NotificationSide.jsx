@@ -9,11 +9,14 @@ const NotificationSide = () => {
 	const { currentLog, setcurrentLog } = useContext(LogContext);
 
 	const updateLogs = () => {
-		axios.get("/data")
+		const intervall=setInterval(()=>{ 
+			axios.get("/data")
 			.then((res) => {
 				setLogs([...res.data])
 					.catch((e) => console.error(e))
-			})
+
+			})}, 30000);
+			return () => clearInterval(intervall);
 	}
 
 	useEffect(() => {
