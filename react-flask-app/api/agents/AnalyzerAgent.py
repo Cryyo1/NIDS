@@ -1,6 +1,5 @@
 import json
 from spade import agent, quit_spade
-from spade.message import Message
 from spade.template import Template
 from spade.behaviour import CyclicBehaviour
 import time
@@ -20,7 +19,7 @@ class AgentAnalyzer(agent.Agent):
         analyz=self.Analyzerbehaviour()
         template = Template()
         template.set_metadata("performative", "inform")
-        self.add_behaviour(analyz)
+        self.add_behaviour(analyz,template)
 
 ## analyzer agent
 jid_analyzer = "Analyzer@jabber.hot-chilli.eu"

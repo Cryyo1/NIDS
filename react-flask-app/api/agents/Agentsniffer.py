@@ -1,4 +1,3 @@
-import asyncio
 import json
 from spade import agent, quit_spade
 from spade.message import Message
@@ -7,7 +6,7 @@ from spade.behaviour import CyclicBehaviour
 from scapy.all import *
 from scapy.layers.http import HTTPRequest
 import colorama as cr
-
+from datetime import datetime, timedelta
 # initialize colorama
 cr.init()
 # define colors
@@ -17,17 +16,22 @@ RESET = cr.Fore.RESET
 #define constants
 show_raw = True
 captured_data=[]
+failed_attempts={}
+
 class AgentSniffer(agent.Agent):
     
     ### making agent capture packets from the network with cyclic behaviour
     
     class sniffBehaviour(CyclicBehaviour):
+
         async def on_start(self,iface="Ethernet",port=80):
             # port 80 for http request capture (generally)
             self.iface = iface
             self.port =port
+            self.detected=False
             
         async def run(self):
+        
             sniff(filter=f"port {self.port}", prn=self.process_packet,count=1, iface=self.iface, store=False,)
             
             
@@ -40,7 +44,7 @@ class AgentSniffer(agent.Agent):
                 # get the requester's IP Address
                 ip = packet[scapy.all.IP].src
                 # get the request method
-                method = packet[HTTPRequest].Method.decode()
+                method = packet[HTTPRequest].Method.decode() 
                 data={
                     "ip source":packet[scapy.all.IP].src,
                     "ip destination":packet[scapy.all.IP].dst,
@@ -50,26 +54,44 @@ class AgentSniffer(agent.Agent):
                     "url": url,
                     "paylod": packet[Raw].load if((show_raw and method=="POST" and packet.haslayer(Raw))) else '',
                 }
-                if("testphp.vulnweb.com" in data["url"]):
-                    asyncio.create_task(self.sendMessage(data))
-        async def sendMessage(self,data):
-            message=Message(to="Analyzer@jabber.hot-chilli.eu")
-            message.sender="sniffer@hot-chilli.eu"
-            message.metadata = {"performative": "inform","ontology":"myOntology","language":"OWL-S"}
-            message.body="Hello Analyzer"
-            print(isinstance(message,Message))
-            await self.send(message)
-            print("message sent")
-
+                print(data)
+                now = datetime.now()
+                if ip in failed_attempts:
+                    if failed_attempts[ip]['count'] > 50 and now - failed_attempts[ip]['time'] < timedelta(hours=1) and not self.detected:
+                            outfile=open('.\\logs.json', 'r')
+                            logs_data=json.load(outfile)
+                            outfile.close()
+                            log={
+                                "id": str(len(logs_data)+1),
+                                'title': 'intrusion',
+                                'subtitle': 'brute force',
+                                'description': 'une tentative de brute force a été détectée {}'.format(data['url']),
+                                'time': datetime.now().strftime("%Hh%M"),
+                                'crit': 75,
+                                'data': '',
+                                'ip_source': data['ip source'],
+                                "ip_dest": data['ip destination']
+                            }
+                            outfile=open(".\\logs.json", 'w')
+                            logs_data[str(len(logs_data)+1)]=log
+                            json.dump(logs_data,outfile,sort_keys=True, indent=4)
+                            outfile.close()
+                            self.detected=True
+                else:
+                  failed_attempts[ip] = {'count': 1, 'time': now}
+        
+                        
+                failed_attempts[ip]['count'] += 1
+                failed_attempts[ip]['time'] = now
                     
     async def setup(self):
         print("Hello World! I'm agent {}".format(str(self.jid)))
         capture = self.sniffBehaviour()
         self.add_behaviour(capture)
-            
-                     
 
-                
+
+            
+                               
     
 
 
@@ -80,8 +102,6 @@ sniffer = AgentSniffer(jid_sniffer, passwd_sniffer)
 future_sniffer = sniffer.start()
 future_sniffer.result()
 
-
-# wait until both agents are started
 while sniffer.is_alive():
         try:
             time.sleep(1)
