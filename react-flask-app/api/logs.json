@@ -1,23 +1,23 @@
 {
     "1": {
-        "crit": 70,
+        "crit": 2,
         "data": "",
         "description": "une tentative de brute force a \u00e9t\u00e9 d\u00e9tect\u00e9e",
         "id": "1",
         "ip_dest": "192.168.1.114",
         "ip_source": "192.168.1.74",
         "subtitle": "brute force",
-        "time": "15h30",
+        "time": "11:30",
         "title": "intrusion"
     },
     "2": {
-        "crit": 75,
+        "crit": 2,
         "description": "une tentative de cross site scripting a \u00e9t\u00e9 d\u00e9tect\u00e9e",
         "id": "2",
         "ip_dest": "192.168.1.94",
         "ip_source": "192.168.1.147",
         "subtitle": "cross site scripting",
-        "time": "23h30",
+        "time": "12:30",
         "title": "intrusion"
     },
     "3": {
@@ -27,17 +27,17 @@
         "ip_dest": "192.168.1.114",
         "ip_source": "192.168.1.147",
         "subtitle": "paquet mal form\u00e9",
-        "time": "11h26",
+        "time": "13:30",
         "title": "possible intrusion"
     },
     "4": {
-        "crit": 70,
+        "crit": 2,
         "description": "une donn\u00e9e avec des caract\u00e8res sp\u00e9ciaux inject\u00e9e  a \u00e9t\u00e9 d\u00e9tect\u00e9e",
         "id": "4",
         "ip_dest": "192.168.1.112",
         "ip_source": "192.168.1.174",
         "subtitle": "injection",
-        "time": "5h47",
+        "time": "13:47",
         "title": "intrusion"
     },
     "5": {
@@ -47,18 +47,7 @@
         "ip_dest": "192.168.1.45",
         "ip_source": "192.168.1.12",
         "subtitle": "port ouvert",
-        "time": "2h58",
+        "time": "13:58",
         "title": "Configuration"
-    },
-    "6": {
-        "crit": 75,
-        "data": "",
-        "description": "une tentative de brute force a \u00e9t\u00e9 d\u00e9tect\u00e9e sur testphp.vulnweb.com/login.php",
-        "id": "6",
-        "ip_dest": "44.228.249.3",
-        "ip_source": "192.168.100.6",
-        "subtitle": "brute force",
-        "time": "18h13",
-        "title": "intrusion"
     }
 }

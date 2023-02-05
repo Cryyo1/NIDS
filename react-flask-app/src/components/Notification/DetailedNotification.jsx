@@ -5,9 +5,9 @@ import CriticalityIcon from "./CriticalityIcon";
 const DetailedNotification = ({ crit, title, subtitle, time, ipsource, ipdestination, description }) => {
 	return <div class="grid grid-cols-4 gap-4">
 		<div class="..."><CriticalityIcon criticality={crit} iconSize='2em' /></div>
-		<div class="text-white col-span-2 text-l ... justify-center align-center">{title}</div>
-		<div class="text-white ...">18:00</div>
-		<div class="col-span-4 text-white text-l ...">{subtitle}</div>
+		<div class="text-white col-span-2 text-3xl ... justify-center align-center">{title}</div>
+		<div class="text-white ...">{time}</div>
+		<div class="col-span-4 text-white text-xl ...">{subtitle}</div>
 		<div class="col-span-4 text-white text-l ...">IP SOURCE : {ipsource}</div>
 		<div class="col-span-4 text-white text-l ...">IP DESTINATION : {ipdestination} </div>
 		<div class="col-span-4 text-white text-l ...">description : {description}</div>

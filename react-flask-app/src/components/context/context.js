@@ -6,8 +6,8 @@ export const LogContext = createContext({
 		'title': 'intrusion',
 		'subtitle': 'brute force',
 		'description': 'une tentative de brute force a été détectée',
-		'time': '15h30',
-		'crit': 70,
+		'time': '15:30',
+		'crit': 2,
 		'data': '',
 		'ip_source': "192.168.1.74",
 		"ip_dest": "192.168.1.114"
